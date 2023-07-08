@@ -1,4 +1,4 @@
-import {gql} from "graphql-request";
+import { gql } from "graphql-request";
 
 const userInfo = gql`
   fragment UserInfo on users {
@@ -16,15 +16,9 @@ export const GET_USER = gql`
 `;
 
 export const CREATE_USER = gql`
-  mutation CreateUser(
-    $id: String!
-    $isAnonymous: Boolean
-  ) {
+  mutation CreateUser($id: String!, $isAnonymous: Boolean) {
     insert_users_one(
-      object: {
-        id: $id
-        anonymous: $isAnonymous
-      }
+      object: { id: $id, anonymous: $isAnonymous }
       on_conflict: { constraint: users_pkey }
     ) {
       ...UserInfo

@@ -1,6 +1,5 @@
-
-import {AuthNext, Next} from "./types";
-import {region} from "firebase-functions/v1";
+import { AuthNext, Next } from "./types";
+import { region } from "firebase-functions/v1";
 import * as _cors from "cors";
 
 type RequestConfig<T> = {
@@ -14,7 +13,7 @@ type AuthConfig = {
   trigger: "onCreate" | "onDelete";
 };
 
-export const httpsRequest = <T>({next, secrets}: RequestConfig<T>) => {
+export const httpsRequest = <T>({ next, secrets }: RequestConfig<T>) => {
   const cors = _cors({
     origin: process.env.ORIGIN,
   });
@@ -28,7 +27,7 @@ export const httpsRequest = <T>({next, secrets}: RequestConfig<T>) => {
     });
 };
 
-export const authRequest = ({next, secrets, trigger}: AuthConfig) => {
+export const authRequest = ({ next, secrets, trigger }: AuthConfig) => {
   if (trigger === "onCreate") {
     return region("us-central1")
       .runWith({

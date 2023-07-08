@@ -16,15 +16,9 @@ exports.GET_USER = (0, graphql_request_1.gql) `
   ${userInfo}
 `;
 exports.CREATE_USER = (0, graphql_request_1.gql) `
-  mutation CreateUser(
-    $id: String!
-    $isAnonymous: Boolean
-  ) {
+  mutation CreateUser($id: String!, $isAnonymous: Boolean) {
     insert_users_one(
-      object: {
-        id: $id
-        anonymous: $isAnonymous
-      }
+      object: { id: $id, anonymous: $isAnonymous }
       on_conflict: { constraint: users_pkey }
     ) {
       ...UserInfo
