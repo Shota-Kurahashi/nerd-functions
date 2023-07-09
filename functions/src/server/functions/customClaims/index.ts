@@ -1,8 +1,7 @@
-import { getApp, getApps, initializeApp } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
 
 import { ZodError } from "zod";
-import { createCustomClaims, getFirebaseConfig } from "../../config/options";
+import { createCustomClaims } from "../../config/options";
 import { validate } from "../../types/validate";
 import { Next, ReturnCreateClaims, createClaimsSchema } from "../../types";
 import {
@@ -12,14 +11,13 @@ import {
 } from "../../error";
 
 export const postHandler: Next<ReturnCreateClaims> = async (req, res) => {
-  getApps().length === 0 ? initializeApp(getFirebaseConfig()) : getApp();
-
   try {
     validate(req.body, createClaimsSchema);
     const { id, isAnonymous } = req.body;
     const customClaims = createCustomClaims(id, isAnonymous);
 
     await getAuth().setCustomUserClaims(id, customClaims);
+
     res.status(200).json({ message: "ok" });
   } catch (err: any) {
     if (err instanceof ZodError) {

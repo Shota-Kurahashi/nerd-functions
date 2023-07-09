@@ -1,6 +1,7 @@
 import * as cors from "cors";
 import * as express from "express";
 import { router } from "../routers/api";
+import { checkAuth } from "../middleware";
 
 const app = express();
 
@@ -12,6 +13,8 @@ app.use(
     origin: process.env.ORIGIN,
   })
 );
+
+app.use(checkAuth);
 app.use("/", router);
 
 export { app };

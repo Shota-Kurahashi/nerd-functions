@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setCustomClaimsHandler = exports.postHandler = void 0;
-const app_1 = require("firebase-admin/app");
 const auth_1 = require("firebase-admin/auth");
 const zod_1 = require("zod");
 const options_1 = require("../../config/options");
@@ -9,7 +8,6 @@ const validate_1 = require("../../types/validate");
 const types_1 = require("../../types");
 const error_1 = require("../../error");
 const postHandler = async (req, res) => {
-    (0, app_1.getApps)().length === 0 ? (0, app_1.initializeApp)((0, options_1.getFirebaseConfig)()) : (0, app_1.getApp)();
     try {
         (0, validate_1.validate)(req.body, types_1.createClaimsSchema);
         const { id, isAnonymous } = req.body;
